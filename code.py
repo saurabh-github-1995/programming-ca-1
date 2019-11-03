@@ -18,4 +18,25 @@ def registerStudenrs(student):
     
 #function for student with lowest number
 def retrive():
-    return studentsList[0]    
+    return studentsList[0]
+
+
+
+
+#Second Logic for sorting
+def sortList2(student):
+    if(len(studentsList)!=0 and student["number"]>studentsList[-1]["number"] ):
+       
+        studentsList.append(student)
+    else:
+        for i in range(len(studentsList)):
+            if(student["number"]<studentsList[i]["number"]):
+                studentsList.insert(i,student)
+                break;
+
+
+
+#third sorting logic
+
+
+                
