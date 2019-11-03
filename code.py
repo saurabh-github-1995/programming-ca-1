@@ -1,27 +1,24 @@
 #initializing empty student list which will containe number of dictionaries of student data
 studentsList=[{"name":"Saurabh","number":11111111,"grade":"56"}]
 
-
+#function for sorting student list using bubble sort and recursion
 def sortList():
     length=len(studentsList)
     for i in range(length-1):
         if(studentsList[i+1]["number"]<studentsList[i]["number"]):
-           studentsList[i]["number"],studentsList[i+1]["number"]=studentsList[i+1]["number"],studentsList[i]["number"]
+           studentsList[i],studentsList[i+1]=studentsList[i+1],studentsList[i]
            sortList()
 
 #function for mregisterenig stuentd one at a time
 def registerStudenrs(student):
     
-    #studentsList.append(student)
-    sortList2(student)
-    
-    
+    studentsList.append(student)
+    sortList()
+    #sortList2(student)
+
 #function for student with lowest number
 def retrive():
     return studentsList[0]
-
-
-
 
 #Second Logic for sorting
 def sortList2(student):
@@ -33,10 +30,3 @@ def sortList2(student):
             if(student["number"]<studentsList[i]["number"]):
                 studentsList.insert(i,student)
                 break;
-
-
-
-#third sorting logic
-
-
-                
