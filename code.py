@@ -14,3 +14,8 @@ def registerStudenrs(student):
     
     #studentsList.append(student)
     sortList2(student)
+    
+    
+#function for student with lowest number
+def retrive():
+    return studentsList[0]    
