@@ -14,7 +14,7 @@ def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
             studentsData.append(studentObjGlobal)
         else:
 
-            if(startIndex>lastIndex):
+            if(startIndex>lastIndex):#end-start+1 <= 0:
                 studentsData.insert(startIndex,studentObjGlobal)
                 #print(startIndex)
                 return startIndex
@@ -42,7 +42,7 @@ def retriveStudentData():
         del studentsData[0]
         return loweststudent
     else:
-        return ""
+        return "No data exists"
 
 def removeStudentData():
     del studentsData[0]
