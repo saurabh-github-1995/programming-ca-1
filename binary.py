@@ -1,11 +1,18 @@
+'''
+In this logic I am making use of Binary search which makes it much more efficient than my
+other logics where i have used recursion.
+For inserting element even at 10M-1th index it takes much much less time beacuse it directly breaks list into two halves
+based on the value of current student number.
+It works at a time coplexity of O(Log n)
+'''
+
+#Array for storing students data in a dictionary format i.e list of dictionaries
 studentsData=[]
-"""n=11111111
-for i in range(1000):
-    #print(i)
-    n=n+i
-    student={"name":"Saurabh","number": i,"grade":"56"}
-    studentsData.append(student)"""
+
+#Dictionary for storing data
 studentObjGlobal={}
+
+#Method for finding the index in existing list at which new student will be added
 def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
     if(len(studentsData)==0):
         studentsData.append(studentObjGlobal)
@@ -29,21 +36,37 @@ def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
                     else:
                         insertDataAtSpecificPostion(targetStudentNo,midpointIndex+1,lastIndex)
 
-
+#this method recieves the dictionary of student and pass it to the above method for inserting in list
 def addStudentToList(studentObj):
     global studentObjGlobal 
     studentObjGlobal=studentObj
     insertDataAtSpecificPostion(studentObj['number'],0,len(studentsData))
     
-    
+#this function returns the first element from list deleting that element
+#it always returns the 0th index because list is sorted always
 def retriveStudentData():
     if(len(studentsData)!=0):
         loweststudent=studentsData[0]
         del studentsData[0]
         return loweststudent
     else:
-        return "No data exists"
-
-def removeStudentData():
-    del studentsData[0]
+        return "No Records exists"
         
+        
+        
+'''Logic for generating random student numbers and inserting it into the students list
+from random import randrange
+for i in range(10):
+    #print(i)
+   
+    student={"name":"Saurabh","number": randrange(10000000, 99999999),"grade":"56"}
+    addStudentToList(student)
+
+#Calling function for adding students     
+addStudentToList({"name":"Saurabh","number":99999991,"grade":"56"})
+
+
+
+
+#Calling function for retriving students
+retriveStudentData()'''

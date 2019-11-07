@@ -1,72 +1,52 @@
+'''In this code i have implemented sorting logic in two ways
+1st is using bubble sort and recursion. But it is not efficeint at all because every time I append elemnt at the last
+of list and then calls bubble sort function
+In second logic i am doing more like a inserting sort. In this I find a correct index before inserting an element
+so it is more efficient than bubble sort
+
 '''
-In this logic I am making use of Binary search which makes it much more efficient than my
-other logics where i have used recursion.
-For inserting element even at 10M-1th index it takes much much less time beacuse it directly breaks list into two halves
-based on the value of current student number.
-It works at a time coplexity of O(Log n)
-'''
+#initializing empty student list which will containe number of dictionaries of student data
+studentsList=[{"name":"Saurabh","number":11111111,"grade":"56"}]
 
-#Array for storing students data in a dictionary format i.e list of dictionaries
-studentsData=[]
+#function for sorting student list using bubble sort and recursion
+def sortList():
+    length=len(studentsList)
+    for i in range(length-1):
+        if(studentsList[i+1]["number"]<studentsList[i]["number"]):
+           studentsList[i],studentsList[i+1]=studentsList[i+1],studentsList[i]
+           sortList()
 
-#Dictionary for storing data
-studentObjGlobal={}
-
-#Method for finding the index in existing list at which new student will be added
-def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
-    if(len(studentsData)==0):
-        studentsData.append(studentObjGlobal)
-    else:
-        if(targetStudentNo>studentsData[-1]["number"]):
-            studentsData.append(studentObjGlobal)
-        else:
-
-            if(startIndex>lastIndex):#end-start+1 <= 0:
-                studentsData.insert(startIndex,studentObjGlobal)
-                #print(startIndex)
-                return startIndex
-            else:
-                midpointIndex=startIndex+(lastIndex-startIndex)//2
-                if(studentsData[midpointIndex]["number"]==targetStudentNo):
-                    print("Student record with number already exist")
-                    return midpointIndex
-                else:
-                    if(targetStudentNo<studentsData[midpointIndex]["number"]):
-                        insertDataAtSpecificPostion(targetStudentNo,startIndex,midpointIndex-1)
-                    else:
-                        insertDataAtSpecificPostion(targetStudentNo,midpointIndex+1,lastIndex)
-
-#this method recieves the dictionary of student and pass it to the above method for inserting in list
-def addStudentToList(studentObj):
-    global studentObjGlobal 
-    studentObjGlobal=studentObj
-    insertDataAtSpecificPostion(studentObj['number'],0,len(studentsData))
+#function for registerenig stuentd one at a time
+def registerStudenrs(student):
     
-#this function returns the first element from list deleting that element
-#it always returns the 0th index because list is sorted always
-def retriveStudentData():
-    if(len(studentsData)!=0):
-        loweststudent=studentsData[0]
-        del studentsData[0]
-        return loweststudent
+    studentsList.append(student)
+    sortList()
+    #sortList2(student)
+
+#function for student with lowest number
+def retrive():
+    return studentsList[0]
+
+#Second Logic for sorting i.e like insertion sort
+def sortList2(student):
+    if(len(studentsList)!=0 and student["number"]>studentsList[-1]["number"] ):
+       
+        studentsList.append(student)
     else:
-        return "No Records exists"
-        
-        
-        
- '''Logic for generating random student numbers and inserting it into the students list'''
-from random import randrange
+        for i in range(len(studentsList)):
+            if(student["number"]<studentsList[i]["number"]):
+                studentsList.insert(i,student)
+                break;
+                
+                
+#code for adding number of studentrs to list               
+n=11111111
 for i in range(10):
     #print(i)
-   
-    student={"name":"Saurabh","number": randrange(10000000, 99999999),"grade":"56"}
-    addStudentToList(student)
+    n=n+i
+    student={"name":"Saurabh","number": i,"grade":"56"}
+    registerStudenrs(student) 
 
-#Calling function for adding students     
-addStudentToList({"name":"Saurabh","number":99999991,"grade":"56"})
-
-
-
-
-#Calling function for retriving students
-retriveStudentData()
+#code for adding one student at a time            
+student={"name":"Saurabh","number":42882,"grade":"56"}
+sortList2(student)    
