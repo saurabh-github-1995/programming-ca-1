@@ -1,162 +1,72 @@
-#initializing empty student list which will containe number of dictionaries of student data
-studentsList=[{"name":"Saurabh","number":11111111,"grade":"56"}]
+'''
+In this logic I am making use of Binary search which makes it much more efficient than my
+other logics where i have used recursion.
+For inserting element even at 10M-1th index it takes much much less time beacuse it directly breaks list into two halves
+based on the value of current student number.
+It works at a time coplexity of O(Log n)
+'''
 
-#function for sorting student list using bubble sort and recursion
-def sortList():
-    length=len(studentsList)
-    for i in range(length-1):
-        if(studentsList[i+1]["number"]<studentsList[i]["number"]):
-           studentsList[i],studentsList[i+1]=studentsList[i+1],studentsList[i]
-           sortList()
+#Array for storing students data in a dictionary format i.e list of dictionaries
+studentsData=[]
 
-#function for mregisterenig stuentd one at a time
-def registerStudenrs(student):
-    
-    studentsList.append(student)
-    sortList()
-    #sortList2(student)
+#Dictionary for storing data
+studentObjGlobal={}
 
-#function for student with lowest number
-def retrive():
-    return studentsList[0]
-
-#Second Logic for sorting
-def sortList2(student):
-    if(len(studentsList)!=0 and student["number"]>studentsList[-1]["number"] ):
-       
-        studentsList.append(student)
+#Method for finding the index in existing list at which new student will be added
+def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
+    if(len(studentsData)==0):
+        studentsData.append(studentObjGlobal)
     else:
-        for i in range(len(studentsList)):
-            if(student["number"]<studentsList[i]["number"]):
-                studentsList.insert(i,student)
-                break;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-        ArrayList<Result>resultArrayList=new ArrayList<Result>();
-        List<String>ansList=new ArrayList<String>(); 
-        Map<Integer, String> map = new HashMap<>();
-        for(int i=0;i<events1.size();i++){
-            Result r=new Result();
-            if(events1.get(i).contains("+")){
-                
-                String result=events1.get(i).replaceAll("[^0-9]+", " ").trim();
-                
-                String[] splited = result.split(" ");
-                int resultInt=Integer.parseInt(splited[0]);
-                /*for(int j=0;j<splited.length;j++){
-                    resultInt=Integer.parseInt(splited[j])+resultInt;
-                    
-                }*/
-                
-                r.setEvent(events1.get(i));
-                r.setTime(resultInt);
-                r.setTeamName(team1);
-                resultArrayList.add(r);
-                
-            }else if(events1.get(i).matches(".*\\d.*")){
-                r.setEvent(events1.get(i));
-                r.setTime(Integer.parseInt(events1.get(i).replaceAll("[^0-9]+", " ").trim()));
-                r.setTeamName(team1);
-                resultArrayList.add(r);
-                
-            }
-        }
-        for(int i=0;i<events2.size();i++){
-            Result r=new Result();
-            if(events2.get(i).contains("+")){
-                
-                String result=events2.get(i).replaceAll("[^0-9]+", " ").trim();
-                
+        if(targetStudentNo>studentsData[-1]["number"]):
+            studentsData.append(studentObjGlobal)
+        else:
 
-                String[] splited = result.split(" ");
-                int resultInt=0;
-                for(int j=0;j<splited.length;j++){
-                    resultInt=Integer.parseInt(splited[j])+resultInt;
-                    
-                }
-                r.setEvent(events2.get(i));
-                r.setTime(resultInt);
-                r.setTeamName(team2);
-                resultArrayList.add(r);
-            }else if(events2.get(i).matches(".*\\d.*")){
-                r.setEvent(events2.get(i));
-                r.setTime(Integer.parseInt(events2.get(i).replaceAll("[^0-9]+", " ").trim()));
-                r.setTeamName(team2);
-                resultArrayList.add(r);
-               
-            }
-        }
+            if(startIndex>lastIndex):#end-start+1 <= 0:
+                studentsData.insert(startIndex,studentObjGlobal)
+                #print(startIndex)
+                return startIndex
+            else:
+                midpointIndex=startIndex+(lastIndex-startIndex)//2
+                if(studentsData[midpointIndex]["number"]==targetStudentNo):
+                    print("Student record with number already exist")
+                    return midpointIndex
+                else:
+                    if(targetStudentNo<studentsData[midpointIndex]["number"]):
+                        insertDataAtSpecificPostion(targetStudentNo,startIndex,midpointIndex-1)
+                    else:
+                        insertDataAtSpecificPostion(targetStudentNo,midpointIndex+1,lastIndex)
+
+#this method recieves the dictionary of student and pass it to the above method for inserting in list
+def addStudentToList(studentObj):
+    global studentObjGlobal 
+    studentObjGlobal=studentObj
+    insertDataAtSpecificPostion(studentObj['number'],0,len(studentsData))
     
-    //System.out.println(Collections.sort(resultArrayList));
-
-    
-    List<String> finalResultList = new ArrayList<String>();
-    ArrayList<Result>resultArrayList1=new ArrayList<Result>();
-    //resultArrayList1.add(resultArrayList.get(0));
-    //finalResultList.add(resultArrayList.get(0).getTeamName()+" "+resultArrayList.get(0).getEvent());
-     
-     for(int m=0;m<resultArrayList.size();m++){
-         System.out.println(resultArrayList.size()); 
-           
-            
-        if(m==0){
-            
-             resultArrayList1.add(resultArrayList.get(m)); 
-        }else{
-            for(int j=0;j<resultArrayList1.size();j++){
-              if(resultArrayList.get(m).getTime()<resultArrayList1.get(j).getTime()){
-                  resultArrayList1.add(j,resultArrayList.get(m));
-              }else{
-                  resultArrayList1.add(j+1,resultArrayList.get(m));
-              }
-          } 
-
+#this function returns the first element from list deleting that element
+#it always returns the 0th index because list is sorted always
+def retriveStudentData():
+    if(len(studentsData)!=0):
+        loweststudent=studentsData[0]
+        del studentsData[0]
+        return loweststudent
+    else:
+        return "No Records exists"
         
-        }
-           
         
-         
-     }
+        
+ '''Logic for generating random student numbers and inserting it into the students list'''
+from random import randrange
+for i in range(10):
+    #print(i)
+   
+    student={"name":"Saurabh","number": randrange(10000000, 99999999),"grade":"56"}
+    addStudentToList(student)
 
-    
-
-     for(int k=0;k<resultArrayList1.size();k++){
-            String str="";
-            str=str+resultArrayList.get(k).getTeamName()+" "+resultArrayList.get(k).getEvent();
-            finalResultList.add(str);
-     }
-    
-    return finalResultList;
-
-    }
-
-}
+#Calling function for adding students     
+addStudentToList({"name":"Saurabh","number":99999991,"grade":"56"})
 
 
 
 
-
-
-
-
-
-    times = []
-    for event in events1:
-        times.append(re.findall(r'\d | \d+\d', event).strip())
-    for event in events2:
-        times.append(re.findall(r'\d | \d+\d', event).strip())
-
-    for element in times:
-        if type(element) == list:
-            element = sum(int(i) for i in element)
-    
-    print(times)
+#Calling function for retriving students
+retriveStudentData()
