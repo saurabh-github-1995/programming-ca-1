@@ -1,3 +1,4 @@
+#GITHUB REPO : https://github.com/saurabh-github-1995/programming-ca-1
 '''
 In this logic I am making use of Binary search which makes it much more efficient than my
 other logics where i have used recursion.
@@ -40,8 +41,12 @@ def insertDataAtSpecificPostion(targetStudentNo,startIndex,lastIndex):
 def addStudentToList(studentObj):
     global studentObjGlobal 
     studentObjGlobal=studentObj
-    insertDataAtSpecificPostion(studentObj['number'],0,len(studentsData))
-    
+    if len(studentObj['subjCode'])==7:
+        insertDataAtSpecificPostion(studentObj['number'],0,len(studentsData))
+    else:
+        return "Plase enter a subject code exactly of 7 characters"
+
+        
 #this function returns the first element from list deleting that element
 #it always returns the 0th index because list is sorted always
 def retriveStudentData():
@@ -59,11 +64,11 @@ from random import randrange
 for i in range(10):
     #print(i)
    
-    student={"name":"Saurabh","number": randrange(10000000, 99999999),"grade":"56"}
+    student={"name":"Saurabh","number": randrange(10000000, 99999999),"subjCode":"ABCDEFGH"}
     addStudentToList(student)
 
 #Calling function for adding students     
-addStudentToList({"name":"Saurabh","number":99999991,"grade":"56"})
+addStudentToList({"name":"Saurabh","number":99999991,"subjCode":"ABCDEFGH"})
 
 
 
